@@ -31,7 +31,18 @@ class AlbumController {
         print(albums.count)
     }
     
-    func testEncodingExampleAlbum{
+    func testEncodingExampleAlbum(){
+        guard let url = Bundle.main.url(forResource: "exampleAlbum", withExtension: "json") else {return}
         
+        
+        do {
+            let data = try Data(contentsOf: url)
+            let album = try JSONDecoder().decode(Album.self, from: data)
+            _ = try JSONEncoder().encode(album)
+            
+        } catch  {
+            NSLog("error decoding: \(error)")
+        }
+        print("Succes!")
     }
 }
