@@ -33,7 +33,7 @@ struct Album: Decodable {
         self.id = try container.decode(String.self, forKey: .id)
         
         let genreArray = try container.decode([String].self, forKey: .genres)
-        self.genres = genreArray.joined()
+        self.genres = genreArray.joined(separator: ", ")
         
         self.songs = try container.decode([Song].self, forKey: .songs)
         

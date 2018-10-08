@@ -17,6 +17,17 @@ import Foundation
 
 class AlbumController {
     func testDecodingExampleAlbum(){
+        guard let url = Bundle.main.url(forResource: "exampleAlbum", withExtension: "json") else {return}
         
+        var albums = [Album]()
+        do {
+            let data = try Data(contentsOf: url)
+            let album = try JSONDecoder().decode(Album.self, from: data)
+            albums.append(album)
+            
+        } catch  {
+            NSLog("error decoding: \(error)")
+        }
+        print(albums.count)
     }
 }

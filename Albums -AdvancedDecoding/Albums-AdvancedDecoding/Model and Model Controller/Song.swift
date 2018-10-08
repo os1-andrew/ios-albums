@@ -37,6 +37,7 @@ struct Song: Decodable {
     }
     
     
+    
     //MARK: -Properties
     var name: String
     var duration: String
