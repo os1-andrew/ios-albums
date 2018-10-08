@@ -51,6 +51,30 @@ struct Album: Decodable {
         self.coverArtURL = urls.first ?? ""
     }
     
+    
+    func encode(to encoder: Encoder) throws{
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(id, forKey: .id)
+        try container.encode(artist, forKey: .artist)
+        try container.encode(songs, forKey: .songs)
+        
+        //encode for genres
+        var genreContainer = container.nestedUnkeyedContainer(forKey: .genres)
+        let genreArray = self.genres.split(separator: ",")
+        let genres: [String] = genreArray.compactMap{
+            let genre = $0.trimmingCharacters(in: CharacterSet.whitespaces)
+            return String(genre)
+        }
+        try genreContainer.encode(genres)
+
+        //encode for coverArtURL
+        var artContainer = container.nestedUnkeyedContainer(forKey: .coverArt)
+        
+        var urlContainer = artContainer.nestedContainer(keyedBy: CodingKeys.ArtKeys.self)
+        try urlContainer.encode(coverArtURL, forKey: .url)
+        
+    }
     //MARK: - Properties
     var name: String
     var artist: String

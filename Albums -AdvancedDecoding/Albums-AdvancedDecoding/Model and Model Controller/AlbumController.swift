@@ -30,4 +30,8 @@ class AlbumController {
         }
         print(albums.count)
     }
+    
+    func testEncodingExampleAlbum{
+        
+    }
 }

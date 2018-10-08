@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Song: Decodable {
+struct Song: Codable {
     
     //MARK: - ENUM
     
@@ -36,6 +36,15 @@ struct Song: Decodable {
         self.id = try container.decode(String.self, forKey: .id)
     }
     
+    func encode(to encoder: Encoder) throws{
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        var durationContainer = container.nestedContainer(keyedBy: CodingKeys.DurationKey.self, forKey: .duration)
+        var nameContainer = container.nestedContainer(keyedBy: CodingKeys.TitleKey.self, forKey: .name)
+        
+        try container.encode(name, forKey: .name)
+        try durationContainer.encode(duration, forKey: .duration)
+        try nameContainer.encode(name, forKey: .title)
+    }
     
     
     //MARK: -Properties
